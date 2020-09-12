@@ -1,6 +1,9 @@
 import kotlinx.browser.document
+import kotlinx.css.*
 import kotlinx.html.HTMLTag
 import react.dom.*
+import styled.css
+import styled.styledDiv
 
 data class Video(val id: Int, val title: String, val speaker: String, val videoUrl: String)
 
@@ -33,7 +36,12 @@ fun main() {
                 videoItem(video)
             }
         }
-        div {
+        styledDiv {
+            css {
+                position = Position.absolute
+                top = 10.px
+                right = 10.px
+            }
             h3 {
                 +"John Doe: Building and breaking things"
             }
