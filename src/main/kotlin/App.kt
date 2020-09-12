@@ -14,7 +14,11 @@ val watchedVideos = listOf(
     Video(4, "Mouseless development", "Tom Jerry", "https://youtu.be/PsaFVLr8t4E")
 )
 
-class App : RComponent<RProps, RState>() {
+external interface AppState : RState {
+    var currentVideo: Video?
+}
+
+class App : RComponent<RProps, AppState>() {
     override fun RBuilder.render() {
         div {
             h3 {
@@ -23,6 +27,12 @@ class App : RComponent<RProps, RState>() {
             // Method 1 for instantiating custom components.
             child(VideoList::class) {
                 attrs.videos = unwatchedVideos
+                attrs.selectedVideo = state.currentVideo
+                attrs.onSelectVideo = { video ->
+                    setState {
+                        currentVideo = video
+                    }
+                }
             }
 
             h3 {
@@ -31,6 +41,12 @@ class App : RComponent<RProps, RState>() {
             // Method 2 for instantiating custom components.
             videoList {
                 videos = watchedVideos
+                selectedVideo = state.currentVideo
+                onSelectVideo = { video ->
+                    setState {
+                        currentVideo = video
+                    }
+                }
             }
         }
     }
