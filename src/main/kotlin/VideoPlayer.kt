@@ -2,6 +2,7 @@ import kotlinx.css.*
 import kotlinx.html.js.*
 import react.*
 import react.dom.*
+import state.reducers.Video
 import styled.*
 
 external interface VideoPlayerProps : RProps {

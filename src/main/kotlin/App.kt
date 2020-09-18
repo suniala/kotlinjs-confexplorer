@@ -2,6 +2,7 @@ import kotlinx.browser.*
 import kotlinx.coroutines.*
 import react.*
 import react.dom.*
+import state.reducers.Video
 
 suspend fun fetchVideo(id: Int): Video {
     return window
@@ -19,8 +20,6 @@ suspend fun fetchVideos(): List<Video> = coroutineScope {
         }
     }.awaitAll()
 }
-
-data class Video(val id: Int, val title: String, val speaker: String, val videoUrl: String)
 
 external interface AppState : RState {
     var currentVideo: Video?

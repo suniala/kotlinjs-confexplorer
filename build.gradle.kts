@@ -20,6 +20,12 @@ dependencies {
     implementation(npm("react", "16.13.1"))
     implementation(npm("react-dom", "16.13.1"))
 
+    // Redux
+    implementation("org.jetbrains:kotlin-react-redux:5.0.7-pre.116-kotlin-1.4.10")
+    implementation("org.jetbrains:kotlin-redux:4.0.0-pre.116-kotlin-1.4.10")
+    implementation(npm("react-redux", "5.0.7"))
+    implementation(npm("redux", "4.0.0"))
+
     //Kotlin Styled (chapter 3)
     implementation("org.jetbrains:kotlin-styled:1.0.0-pre.110-kotlin-1.4.0")
     implementation(npm("styled-components", "~5.1.1"))

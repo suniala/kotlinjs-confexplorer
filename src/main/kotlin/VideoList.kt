@@ -1,6 +1,7 @@
-import kotlinx.html.js.onClickFunction
+import kotlinx.html.js.*
 import react.*
 import react.dom.*
+import state.reducers.Video
 
 external interface VideoListProps : RProps {
     var videos: List<Video>
