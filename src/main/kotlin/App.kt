@@ -43,6 +43,14 @@ class App : RComponent<RProps, AppState>() {
 
     override fun RBuilder.render() {
         div {
+            div {
+                h3 {
+                    +"New impl"
+                }
+                refreshButton {
+                    +"Refresh videos"
+                }
+            }
             h3 {
                 +"Videos to watch"
             }
