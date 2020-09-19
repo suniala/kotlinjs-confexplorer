@@ -8,7 +8,8 @@ import state.reducers.State
 import state.reducers.Video
 
 external interface VideosProps : RProps {
-    var videos: List<Video>
+    var watchedVideos: List<Video>
+    var unwatchedVideos: List<Video>
     var selectedVideo: Video?
     var onSelectVideo: (Video) -> Unit
 }
@@ -20,7 +21,15 @@ class Videos : RComponent<VideosProps, RState>() {
                 +"Videos to watch"
             }
             child(VideoList::class) {
-                attrs.videos = props.videos
+                attrs.videos = props.unwatchedVideos
+                attrs.selectedVideo = props.selectedVideo
+                attrs.onSelectVideo = props.onSelectVideo
+            }
+            h3 {
+                +"Videos watched"
+            }
+            child(VideoList::class) {
+                attrs.videos = props.watchedVideos
                 attrs.selectedVideo = props.selectedVideo
                 attrs.onSelectVideo = props.onSelectVideo
             }
@@ -29,7 +38,8 @@ class Videos : RComponent<VideosProps, RState>() {
 }
 
 private interface ReduxVideosStateProps : RProps {
-    var videos: List<Video>
+    var watchedVideos: List<Video>
+    var unwatchedVideos: List<Video>
     var selectedVideo: Video?
 }
 
@@ -42,7 +52,8 @@ interface OwnProps : RProps
 val reduxVideos: RClass<OwnProps> =
     rConnect<State, RAction, WrapperAction, OwnProps, ReduxVideosStateProps, ReduxVideosDispatchProps, VideosProps>(
         { state, _ ->
-            videos = state.videos.asList()
+            watchedVideos = state.viewer.watchedVideos.asList()
+            unwatchedVideos = state.videos.filterNot { state.viewer.watchedVideos.contains(it) }
             selectedVideo = state.viewer.selectedVideo
         },
         { dispatch, _ ->

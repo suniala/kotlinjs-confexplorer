@@ -32,13 +32,13 @@ class App : RComponent<RProps, AppState>() {
         unwatchedVideos = listOf()
         watchedVideos = listOf()
 
-        val mainScope = MainScope()
-        mainScope.launch {
-            val videos = fetchVideos()
-            setState {
-                unwatchedVideos = videos
-            }
-        }
+//        val mainScope = MainScope()
+//        mainScope.launch {
+//            val videos = fetchVideos()
+//            setState {
+//                unwatchedVideos = videos
+//            }
+//        }
     }
 
     override fun RBuilder.render() {
