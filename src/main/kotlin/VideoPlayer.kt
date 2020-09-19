@@ -3,11 +3,12 @@ import kotlinx.html.js.*
 import react.*
 import react.dom.*
 import state.reducers.Video
+import state.reducers.VideoId
 import styled.*
 
 external interface VideoPlayerProps : RProps {
     var video: Video
-    var onWatchedButtonPressed: (Video) -> Unit
+    var onWatchedButtonPressed: (VideoId) -> Unit
     var unwatchedVideo: Boolean
 }
 
@@ -29,7 +30,7 @@ class VideoPlayer : RComponent<VideoPlayerProps, RState>() {
                 }
                 attrs {
                     onClickFunction = {
-                        props.onWatchedButtonPressed(props.video)
+                        props.onWatchedButtonPressed(props.video.id)
                     }
                 }
                 if (props.unwatchedVideo) {

@@ -11,7 +11,7 @@ fun viewer(state: Viewer = Viewer(null, emptyArray()), action: RAction): Viewer 
     }
     is MarkWatched -> {
         val watchedVideos =
-            if (action.watched) state.watchedVideos + action.video
+            if (!state.watchedVideos.contains(action.video)) state.watchedVideos + action.video
             else state.watchedVideos.filterNot { it == action.video }.toTypedArray()
         state.copy(watchedVideos = watchedVideos)
     }

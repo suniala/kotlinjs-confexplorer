@@ -8,4 +8,4 @@ class FetchVideos() : RAction
 
 class SelectVideo(val video: Video) : RAction
 
-class MarkWatched(val video: VideoId, val watched: Boolean) : RAction
+class MarkWatched(val video: VideoId) : RAction
