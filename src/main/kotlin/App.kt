@@ -50,6 +50,8 @@ class App : RComponent<RProps, AppState>() {
                 refreshButton {
                     +"Refresh videos"
                 }
+                reduxVideos {
+                }
             }
             h3 {
                 +"Videos to watch"
