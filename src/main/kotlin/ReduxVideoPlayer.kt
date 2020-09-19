@@ -50,7 +50,7 @@ val reduxVideoPlayer: RClass<ReduxVideoPlayerOwnProps> =
     rConnect<State, RAction, WrapperAction, ReduxVideoPlayerOwnProps,
             ReduxVideoPlayerStateProps, ReduxVideoPlayerDispatchProps, VideoPlayerWrapperProps>(
         { state, _ ->
-            video = state.videos.find { it.id == state.viewer.selectedVideo }
+            video = state.videos.videos.find { it.id == state.viewer.selectedVideo }
             unwatchedVideo = state.viewer.run {
                 if (selectedVideo != null) !watchedVideos.contains(selectedVideo)
                 else true

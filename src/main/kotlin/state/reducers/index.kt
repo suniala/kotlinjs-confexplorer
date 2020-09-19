@@ -4,11 +4,13 @@ typealias VideoId = Int
 
 data class Video(val id: VideoId, val title: String, val speaker: String, val videoUrl: String)
 
+// NOTE: It is recommended to use Array instead of List here. But why?
+data class Videos(val videos: Array<Video>, val fetching: Boolean)
+
 data class Viewer(val selectedVideo: VideoId?, val watchedVideos: Array<VideoId>)
 
 data class State(
-    // NOTE: It is recommended to use Array instead of List here. But why?
-    val videos: Array<Video> = emptyArray(),
+    val videos: Videos = Videos(emptyArray(), fetching = false),
     val viewer: Viewer = Viewer(null, watchedVideos = emptyArray())
 )
 

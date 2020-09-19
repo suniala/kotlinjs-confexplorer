@@ -52,9 +52,9 @@ interface OwnProps : RProps
 val reduxVideos: RClass<OwnProps> =
     rConnect<State, RAction, WrapperAction, OwnProps, ReduxVideosStateProps, ReduxVideosDispatchProps, VideosProps>(
         { state, _ ->
-            watchedVideos = state.videos.filter { state.viewer.watchedVideos.contains(it.id) }
-            unwatchedVideos = state.videos.filterNot { state.viewer.watchedVideos.contains(it.id) }
-            selectedVideo = state.videos.find { it.id == state.viewer.selectedVideo }
+            watchedVideos = state.videos.videos.filter { state.viewer.watchedVideos.contains(it.id) }
+            unwatchedVideos = state.videos.videos.filterNot { state.viewer.watchedVideos.contains(it.id) }
+            selectedVideo = state.videos.videos.find { it.id == state.viewer.selectedVideo }
         },
         { dispatch, _ ->
             onSelectVideo = { dispatch(SelectVideo(it)) }

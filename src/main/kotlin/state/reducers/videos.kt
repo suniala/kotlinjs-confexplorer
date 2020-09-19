@@ -1,15 +1,34 @@
 package state.reducers
 
+import kotlinx.browser.*
+import kotlinx.coroutines.*
 import redux.RAction
 import state.actions.FetchVideos
+import state.actions.VideosReceived
 
-fun videos(state: Array<Video> = emptyArray(), action: RAction): Array<Video> = when (action) {
+suspend fun fetchVideo(id: Int): Video {
+    return window
+        .fetch("https://my-json-server.typicode.com/kotlin-hands-on/kotlinconf-json/videos/$id")
+        .await()
+        .json()
+        .await()
+        .unsafeCast<Video>()
+}
+
+suspend fun fetchVideos(): List<Video> = coroutineScope {
+    (1..25).map { id ->
+        async {
+            fetchVideo(id)
+        }
+    }.awaitAll()
+}
+
+fun videos(state: Videos = Videos(emptyArray(), false), action: RAction): Videos = when (action) {
     is FetchVideos -> {
-        arrayOf(
-            Video(1, "Video 1", "Speaker 1", "https://youtu.be/PsaFVLr8t4E"),
-            Video(2, "Video 2", "Speaker 2", "https://youtu.be/PsaFVLr8t4E"),
-            Video(3, "Video 3", "Speaker 3", "https://youtu.be/PsaFVLr8t4E")
-        )
+        Videos(emptyArray(), true)
+    }
+    is VideosReceived -> {
+        Videos(action.videos, false)
     }
     else -> state
 }
