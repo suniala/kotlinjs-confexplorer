@@ -3,11 +3,13 @@ import react.dom.*
 import react.redux.*
 import redux.RAction
 import redux.WrapperAction
+import state.actions.SelectVideo
 import state.reducers.State
 import state.reducers.Video
 
 external interface VideosProps : RProps {
     var videos: List<Video>
+    var selectedVideo: Video?
     var onSelectVideo: (Video) -> Unit
 }
 
@@ -19,7 +21,7 @@ class Videos : RComponent<VideosProps, RState>() {
             }
             child(VideoList::class) {
                 attrs.videos = props.videos
-                attrs.selectedVideo = null
+                attrs.selectedVideo = props.selectedVideo
                 attrs.onSelectVideo = props.onSelectVideo
             }
         }
@@ -28,24 +30,22 @@ class Videos : RComponent<VideosProps, RState>() {
 
 private interface ReduxVideosStateProps : RProps {
     var videos: List<Video>
+    var selectedVideo: Video?
 }
 
 private interface ReduxVideosDispatchProps : RProps {
-}
-
-interface OwnProps : RProps {
     var onSelectVideo: (Video) -> Unit
 }
+
+interface OwnProps : RProps
 
 val reduxVideos: RClass<OwnProps> =
     rConnect<State, RAction, WrapperAction, OwnProps, ReduxVideosStateProps, ReduxVideosDispatchProps, VideosProps>(
         { state, _ ->
             videos = state.videos.asList()
+            selectedVideo = state.viewer.selectedVideo
         },
-        { _, _ ->
-        },
-        { sp, _, op ->
-            videos = sp.videos
-            onSelectVideo = op.onSelectVideo
+        { dispatch, _ ->
+            onSelectVideo = { dispatch(SelectVideo(it)) }
         }
     )(Videos::class.js.unsafeCast<RClass<VideosProps>>())
