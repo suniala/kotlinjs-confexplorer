@@ -1,8 +1,10 @@
 package state.reducers
 
-data class Video(val id: Int, val title: String, val speaker: String, val videoUrl: String)
+typealias VideoId = Int
 
-data class Viewer(val selectedVideo: Video?, val watchedVideos: Array<Video>)
+data class Video(val id: VideoId, val title: String, val speaker: String, val videoUrl: String)
+
+data class Viewer(val selectedVideo: VideoId?, val watchedVideos: Array<VideoId>)
 
 data class State(
     // NOTE: It is recommended to use Array instead of List here. But why?

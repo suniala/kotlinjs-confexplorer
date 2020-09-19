@@ -6,7 +6,7 @@ import state.actions.SelectVideo
 
 fun viewer(state: Viewer = Viewer(null, emptyArray()), action: RAction): Viewer = when (action) {
     is SelectVideo -> {
-        state.copy(selectedVideo = action.video)
+        state.copy(selectedVideo = action.video.id)
     }
     is MarkWatched -> {
         val watchedVideos =
