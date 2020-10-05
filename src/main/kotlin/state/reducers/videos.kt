@@ -1,15 +1,15 @@
 package state.reducers
 
 import redux.RAction
-import state.actions.RequestVideos
-import state.actions.VideosReceived
+import state.actions.RequestMoreVideos
+import state.actions.MoreVideosReceived
 
 fun videos(state: Videos = Videos(emptyArray(), false), action: RAction): Videos = when (action) {
-    is RequestVideos -> {
-        Videos(emptyArray(), true)
+    is RequestMoreVideos -> {
+        state.copy(fetching = true)
     }
-    is VideosReceived -> {
-        Videos(action.videos, false)
+    is MoreVideosReceived -> {
+        state.copy(videos = state.videos + action.videos, fetching = false)
     }
     else -> state
 }

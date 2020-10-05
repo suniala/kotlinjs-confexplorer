@@ -18,8 +18,7 @@ val store = createStore<State, RAction, dynamic>(
 fun main() {
     render(document.getElementById("root")) {
         provider(store) {
-            child(App::class) {
-            }
+            app {}
         }
     }
 }

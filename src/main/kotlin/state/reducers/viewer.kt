@@ -2,7 +2,6 @@ package state.reducers
 
 import redux.RAction
 import state.actions.MarkWatched
-import state.actions.RequestVideos
 import state.actions.SelectVideo
 
 fun viewer(state: Viewer = Viewer(null, emptyArray()), action: RAction): Viewer = when (action) {
@@ -15,6 +14,5 @@ fun viewer(state: Viewer = Viewer(null, emptyArray()), action: RAction): Viewer 
             else state.watchedVideos.filterNot { it == action.video }.toTypedArray()
         state.copy(watchedVideos = watchedVideos)
     }
-    is RequestVideos -> Viewer(null, emptyArray())
     else -> state
 }

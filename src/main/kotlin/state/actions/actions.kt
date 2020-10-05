@@ -4,6 +4,7 @@ import kotlinx.browser.*
 import kotlinx.coroutines.*
 import redux.RAction
 import redux.WrapperAction
+import state.reducers.State
 import state.reducers.Video
 import state.reducers.VideoId
 import util.RThunk
@@ -19,33 +20,46 @@ private suspend fun fetchVideo(id: Int): Video {
         .unsafeCast<Video>()
 }
 
-private suspend fun fetchVideos(amount: Int): List<Video> = coroutineScope {
-    (1..amount).map { id ->
+private suspend fun fetchVideos2(from: Int, amount: Int): List<Video> = coroutineScope {
+    (from until from + amount).map { id ->
         async {
             fetchVideo(id)
         }
     }.awaitAll()
 }
 
-class RequestVideos() : RAction
+class RequestMoreVideos() : RAction
 
-fun fetchVideos(): RThunk = object : RThunk {
+fun fetchMoreVideosIfNeeded(): RThunk = object : RThunk {
+    override fun invoke(
+        dispatch: (RAction) -> WrapperAction,
+        getState: KFunction0<*>
+    ): WrapperAction {
+        val state = getState().unsafeCast<State>().videos
+        return if (!state.fetching)
+            dispatch(fetchVideos(state.videos.size + 1, 5))
+        else
+            nullAction
+    }
+}
+
+private fun fetchVideos(from: Int, amount: Int): RThunk = object : RThunk {
     private val mainScope = MainScope()
 
     override fun invoke(
         dispatch: (RAction) -> WrapperAction,
         getState: KFunction0<*>
     ): WrapperAction {
-        dispatch(RequestVideos())
+        dispatch(RequestMoreVideos())
         mainScope.launch {
-            val videos = fetchVideos(25)
-            dispatch(VideosReceived(videos.toTypedArray()))
+            val videos = fetchVideos2(from, amount)
+            dispatch(MoreVideosReceived(videos.toTypedArray()))
         }
         return nullAction
     }
 }
 
-class VideosReceived(val videos: Array<Video>) : RAction
+class MoreVideosReceived(val videos: Array<Video>) : RAction
 
 class SelectVideo(val video: Video) : RAction
 

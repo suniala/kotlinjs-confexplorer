@@ -2,13 +2,14 @@ import react.*
 import react.redux.*
 import redux.RAction
 import redux.WrapperAction
-import state.actions.fetchVideos
+import state.actions.fetchMoreVideosIfNeeded
 import state.reducers.State
 
 interface RefreshButtonProps : RProps {
 }
 
 private interface ButtonStateProps : RProps {
+    var active: Boolean
 }
 
 private interface ButtonDispatchProps : RProps {
@@ -19,9 +20,10 @@ private interface ButtonDispatchProps : RProps {
 // ButtonProps do not cause compilation errors.
 val refreshButton: RClass<RefreshButtonProps> =
     rConnect<State, RAction, WrapperAction, RefreshButtonProps, ButtonStateProps, ButtonDispatchProps, ButtonProps>(
-        { _, _ ->
+        { state, _ ->
+            active = !state.videos.fetching
         },
         { dispatch, _ ->
-            onClick = { dispatch(fetchVideos()) }
+            onClick = { dispatch(fetchMoreVideosIfNeeded()) }
         }
     )(Button::class.js.unsafeCast<RClass<ButtonProps>>())
