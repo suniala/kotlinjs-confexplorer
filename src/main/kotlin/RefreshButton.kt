@@ -2,7 +2,7 @@ import react.*
 import react.redux.*
 import redux.RAction
 import redux.WrapperAction
-import state.actions.FetchVideos
+import state.actions.fetchVideos
 import state.reducers.State
 
 interface RefreshButtonProps : RProps {
@@ -22,6 +22,6 @@ val refreshButton: RClass<RefreshButtonProps> =
         { _, _ ->
         },
         { dispatch, _ ->
-            onClick = { dispatch(FetchVideos()) }
+            onClick = { dispatch(fetchVideos()) }
         }
     )(Button::class.js.unsafeCast<RClass<ButtonProps>>())
