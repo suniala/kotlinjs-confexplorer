@@ -28,7 +28,7 @@ private suspend fun fetchVideos2(from: Int, amount: Int): List<Video> = coroutin
     }.awaitAll()
 }
 
-class RequestMoreVideos() : RAction
+class RequestMoreVideos : RAction
 
 fun fetchMoreVideosIfNeeded(): RThunk = object : RThunk {
     override fun invoke(

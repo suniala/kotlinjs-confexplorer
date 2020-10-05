@@ -5,8 +5,7 @@ import redux.WrapperAction
 import state.actions.fetchMoreVideosIfNeeded
 import state.reducers.State
 
-interface RefreshButtonProps : RProps {
-}
+interface RefreshButtonProps : RProps
 
 private interface ButtonStateProps : RProps {
     var active: Boolean

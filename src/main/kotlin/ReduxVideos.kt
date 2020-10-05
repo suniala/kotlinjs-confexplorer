@@ -20,18 +20,18 @@ class Videos : RComponent<VideosProps, RState>() {
             h3 {
                 +"Videos to watch"
             }
-            child(VideoList::class) {
-                attrs.videos = props.unwatchedVideos
-                attrs.selectedVideo = props.selectedVideo
-                attrs.onSelectVideo = props.onSelectVideo
+            videoList {
+                videos = props.unwatchedVideos
+                selectedVideo = props.selectedVideo
+                onSelectVideo = props.onSelectVideo
             }
             h3 {
                 +"Videos watched"
             }
-            child(VideoList::class) {
-                attrs.videos = props.watchedVideos
-                attrs.selectedVideo = props.selectedVideo
-                attrs.onSelectVideo = props.onSelectVideo
+            videoList {
+                videos = props.watchedVideos
+                selectedVideo = props.selectedVideo
+                onSelectVideo = props.onSelectVideo
             }
         }
     }
